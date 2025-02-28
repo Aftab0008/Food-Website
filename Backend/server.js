@@ -13,9 +13,15 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
 
-// API Routes
-app.use("/api", authRoutes);
+// Health Check Route (Prevents Railway from stopping the app)
+app.get("/", (req, res) => {
+  res.send("Server is running on Railway!");
+});
 
+// API Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/reservations", reservationRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
